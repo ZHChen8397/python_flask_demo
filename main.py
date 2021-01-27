@@ -1,13 +1,21 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, flash
 
 app = Flask(__name__)
 
 @app.route('/loginurl', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        return redirect(url_for('hello', username=request.form.get('username')))
-
+        if login_check(request.form['username'], request.form['password']):
+            flash('Login Success!')
+            return redirect(url_for('hello', username=request.form.get('username')))
     return render_template('login.html')
+
+def login_check(username, password):
+    """登入帳號密碼檢核"""
+    if username == 'admin' and password == 'hello':
+        return True
+    else:
+        return False
 
 @app.route('/hello/<username>')
 def hello(username):
@@ -15,4 +23,5 @@ def hello(username):
 
 if __name__ == '__main__':
     app.debug = True
-    app.run()    
+    app.secret_key = "Your Key"
+    app.run()
