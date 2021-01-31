@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <title>Login Demo</title>
+    <body>
+        <div class="wrapper">
+            <div class="container">
+                <h1>Log in</h1>
+                <form name='form' id='form'>
+                    姓名：
+                        <input type='text' name='name' id='name' /> Password：
+                        <input type='text' name='password' id='password' />
+                        <button type="submit" id="login-button" onclick="processFormData()">Login</button>
+                </form>
+                    
+
+            </div>
+        </div>
+    </body>
+</html>
+
+
+
+<script>
+    async function processFormData() {
+        const formElement = document.getElementById("form");
+        const name = formElement[0].value;
+        const password = formElement[1].value;
+        const rest_url = "http://127.0.0.1:5000/verifyuser/"  + name + password
+        await fetch(rest_url)
+        .then((respnose)=>{
+            // alert(respnose.name)
+            // console.log(respnose.json())
+            return respnose.json()
+        }).then((response)=>{
+            var json_str = JSON.stringify(response)
+            var json_obj = JSON.parse(json_str)
+            if(json_obj['message'] != "success"){
+                alert("log in fail")
+            }
+            else{
+                alert("log in success")
+            }
+        })
+    }
+</script>
