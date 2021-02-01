@@ -2,7 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api
 
-from resources.user import GetUser, AddUser, VerifyUser, Users
+from resources.user import GetUser, AddUser, VerifyUserAccount, Users
 
 app = Flask(__name__)
 api = Api(app)
@@ -11,7 +11,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///common/user.db?check_same_thr
 app.config['CORS_HEADERS'] = 'Content-Type'
 api.add_resource(GetUser, "/getuser/<string:name>")
 api.add_resource(AddUser, "/adduser/")
-api.add_resource(VerifyUser, "/verifyuser/<string:name>/<string:password>/")
+api.add_resource(VerifyUserAccount, "/verifyuser/<string:name>/<string:password>/")
 api.add_resource(Users, "/allusers/")
 
 

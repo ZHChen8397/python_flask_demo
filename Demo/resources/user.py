@@ -26,15 +26,22 @@ class AddUser(Resource):
     def post(self):
         arg = self.parser.parse_args()
         user = UserModel(arg['name'], arg['password'])
-        user.add_user()
-        return {
-            'message': 'Insert user success',
-            'user': user.name
-        }
+        is_user_exist = user.get_user(arg['name'])
+        if not is_user_exist:
+            user.add_user()
+            return {
+                'message': 'Insert user success',
+                'user': user.name
+            }
+        else:
+            return{
+                'message': 'User already exist!'
+            }
 
-class VerifyUser(Resource):
+        
+class VerifyUserAccount(Resource):
     def get(self, name, password):
-        user = UserModel.verify_user(name=name, password= password)
+        user = UserModel.verify_user_account(name=name, password= password)
         if not user:
             return{
                 'message': 'User Not found'
@@ -45,30 +52,6 @@ class VerifyUser(Resource):
                 'name':user.name,
                 'password':user.password
             }
-        
-    
-#     def put(self, name):
-#         arg = self.parser.parse_args()
-#         find = [item for item in users if item['name'] == name]
-#         if len(find) == 0:
-#             return {
-#                 'message': 'username not exist!'
-#             }, 403
-#         user = find[0]
-#         user['name'] = arg['name']
-#         user['password'] = arg['password']
-#         return {
-#             'message': 'Update user success',
-#             'user': user
-#         }
-
-#     def delete(self, name):
-#         global users
-#         users = [item for item in users if item['name'] != name]
-#         return {
-#             'message': 'Delete done!'
-#         }
-
 
 class Users(Resource):
     def get(self):

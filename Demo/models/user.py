@@ -33,5 +33,5 @@ class UserModel(db.Model):
         return cls.query.all()
     
     @classmethod
-    def verify_user(cls, name, password):
+    def verify_user_account(cls, name, password):
         return cls.query.filter_by(name = name, password = password).first()
