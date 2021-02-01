@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+
 from common.db import db
 from models.user import UserModel
 
