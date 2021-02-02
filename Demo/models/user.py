@@ -23,11 +23,6 @@ class UserModel(db.Model):
     def get_user(cls, name):
         return cls.query.filter_by(name=name).first()
 
-    @staticmethod
-    def delete_user(self):
-        db.session.delete(self)
-        db.session.commit()
-
     @classmethod
     def get_all_user(cls):
         return cls.query.all()
