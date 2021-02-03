@@ -4,7 +4,7 @@
     <body>
         <div class="wrapper">
             <div class="container">
-                <h1>Log in</h1>
+                <h1 id='title'>Log in</h1>
                 <form name='form' id='form'>
                     姓名：
                         <input type='text' name='name' id='name' /> 
@@ -25,18 +25,26 @@
         const name = formElement[0].value;
         const password = formElement[1].value;
         const rest_url = "http://127.0.0.1:5000/verifyuser/"  + name  + '/' + password + '/'
-        await fetch(rest_url)
-        .then((respnose)=>{
-            return respnose.json()
-        }).then((response)=>{
-            var json_str = JSON.stringify(response)
-            var json_obj = JSON.parse(json_str)
-            if(json_obj['message'] != "success"){
-                alert("log in fail")
-            }
-            else{
-                alert("log in success")
-            }
-        })
+        if(name == "" ){
+            alert("name should not be empty")
+        }
+        else if(password ==""){
+            alert("password should not be empty")
+        }
+        else{
+            await fetch(rest_url)
+            .then((respnose)=>{
+                return respnose.json()
+            }).then((response)=>{
+                var json_str = JSON.stringify(response)
+                var json_obj = JSON.parse(json_str)
+                if(json_obj['message'] != "success"){
+                    alert("log in fail")
+                }
+                else{
+                    alert("log in success")
+                }
+            })
+        }
     }
 </script>
