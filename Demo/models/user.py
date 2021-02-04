@@ -12,9 +12,6 @@ class UserModel(db.Model):
         self.name = name
         self.password = password
     
-    def update_user(self):
-        db.session.commit()
-
     def add_user(self):
         db.session.add(self)
         db.session.commit()
